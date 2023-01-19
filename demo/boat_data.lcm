@@ -1,0 +1,8 @@
+package bodata;
+struct boat_data
+{
+    double   comp_power;
+    double   act_power; 
+    double   angle;
+    double   speed;
+}

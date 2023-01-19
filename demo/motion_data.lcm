@@ -1,0 +1,6 @@
+package modata;
+struct motion_data
+{
+    double   distance;
+    double   bearing; 
+}
