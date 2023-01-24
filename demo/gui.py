@@ -53,8 +53,10 @@ def gui_func():
             exit(69)
             break
 
-        ax.cla()                    # clear the subplot
-        ax.grid()                   # draw the grid
+        act.cla()                    # clear the subplot
+        act.grid()                   # draw the grid
+	comp.cla()
+	act.grid()
 
         with sqlite3.connect(power_db) as c:
             act_data_entries = c.execute('''SELECT * FROM actuation_power_data ORDER BY rowid DESC LIMIT 5;''').fetchall()
