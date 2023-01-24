@@ -1,5 +1,4 @@
 import PySimpleGUI as sg
-import cv2
 import multiprocessing as mp
 import numpy as np
 import matplotlib
@@ -9,7 +8,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, FigureCanvasAgg
 from matplotlib.figure import Figure
 import sqlite3
 
-power_db = "/home/pi/LCM-AutoBoat/testScripts/actuation_power.db"
+power_db = "/home/pi/MARC2023Demo/demo/power.db"
 
 def draw_figure(canvas, figure, loc=(0, 0)):
     figure_canvas_agg = FigureCanvasTkAgg(figure, canvas)
@@ -25,9 +24,7 @@ def gui_func():
                 [sg.Text('Camera View')]]
 
     right_col = [[sg.Text('Computation Power')],
-                [sg.Canvas(background_color=sg.theme_button_color()[1], size=(640,225), key='-CANVAS-')],
-                [sg.Text('Actuation Power')],
-                [sg.Canvas(background_color=sg.theme_button_color()[1], size=(640,225))]]
+                [sg.Canvas(background_color=sg.theme_button_color()[1], size=(640,225), key='-CANVAS1-')]]
 
 
 
@@ -36,15 +33,19 @@ def gui_func():
 
     window = sg.Window('LEAN Robot GUI', layout, finalize=True)
 
-    canvas_elem = window['-CANVAS-']
-    canvas = canvas_elem.TKCanvas
+    canvas_elem1 = window['-CANVAS1-']
+    canvas1 = canvas_elem1.TKCanvas
 
     fig = Figure()
-    ax = fig.add_subplot(111)
-    ax.set_xlabel("X axis")
-    ax.set_ylabel("Y axis")
-    ax.grid()
-    fig_agg = draw_figure(canvas, fig)
+    act = fig.add_subplot(211)
+    act.set_xlabel("Time (s)")
+    act.set_ylabel("Actuation Power (W)")
+    act.grid()
+    comp = fig.add_subplot(212)
+    comp.set_xlabel("Time (s)")
+    comp.set_ylabel("Compuatation Power (W)")
+    comp.grid()
+    fig_agg = draw_figure(canvas1, fig)
 
     while True:
         event, values = window.read(timeout=10)
@@ -56,14 +57,23 @@ def gui_func():
         ax.grid()                   # draw the grid
 
         with sqlite3.connect(power_db) as c:
-            data_entries = c.execute('''SELECT * FROM actuation_power_data WHERE source = ? ORDER BY rowid DESC LIMIT 5;''', ("ACTUATION",)).fetchall()
-            power_y = []
-            time_x = []
-            for entry in data_entries:
-                power_y.append(entry[3])
-                time_x.append(entry[4])
+            act_data_entries = c.execute('''SELECT * FROM actuation_power_data ORDER BY rowid DESC LIMIT 5;''').fetchall()
+            comp_data_entries = c.execute('''SELECT * FROM actuation_power_data ORDER BY rowid DESC LIMIT 5;''').fetchall()
+            act_power_y = []
+            act_time_x = []
+            comp_power_y = []
+            comp_time_x = []
+            for entry in act_data_entries:
+                act_power_y.append(entry[1])
+                act_time_x.append(entry[2])
+            for entry in comp_data_entries:
+                comp_power_y.append(entry[1])
+                comp_time_x.append(entry[2])
+            
 
-        ax.plot(time_x, power_y,  color='purple')
+        act.plot(act_time_x, act_power_y,  color='purple')
+        comp.plot(comp_time_x, comp_power_y,  color='purple')
+
         fig_agg.draw()
 
     window.close()
