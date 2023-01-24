@@ -68,11 +68,11 @@ def gui_func():
             comp_time_x = []
             for entry in act_data_entries:
                 print(entry)
-                act_power_y.append(entry[1])
-                act_time_x.append(entry[2])
+                act_power_y.append(entry[0])
+                act_time_x.append(entry[1])
             for entry in comp_data_entries:
-                comp_power_y.append(entry[1])
-                comp_time_x.append(entry[2])
+                comp_power_y.append(entry[0])
+                comp_time_x.append(entry[1])
             
 
         act.plot(act_time_x, act_power_y,  color='purple')
