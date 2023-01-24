@@ -67,6 +67,7 @@ def gui_func():
             comp_power_y = []
             comp_time_x = []
             for entry in act_data_entries:
+                print(entry)
                 act_power_y.append(entry[1])
                 act_time_x.append(entry[2])
             for entry in comp_data_entries:
