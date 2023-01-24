@@ -61,13 +61,12 @@ def gui_func():
 
         with sqlite3.connect(power_db) as c:
             act_data_entries = c.execute('''SELECT * FROM actuation_power_data ORDER BY rowid DESC LIMIT 5;''').fetchall()
-            comp_data_entries = c.execute('''SELECT * FROM actuation_power_data ORDER BY rowid DESC LIMIT 5;''').fetchall()
+            comp_data_entries = c.execute('''SELECT * FROM computation_power_data ORDER BY rowid DESC LIMIT 5;''').fetchall()
             act_power_y = []
             act_time_x = []
             comp_power_y = []
             comp_time_x = []
             for entry in act_data_entries:
-                print(entry)
                 act_power_y.append(entry[0])
                 act_time_x.append(entry[1])
             for entry in comp_data_entries:
