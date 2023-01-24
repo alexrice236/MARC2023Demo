@@ -13,7 +13,7 @@ while True:
     msg.angle = 3
     msg.speed = 4
     lc.publish("BOATDATA", msg.encode())
-    time.sleep(.1)
+    time.sleep(.01)
     count += 1
     if count == 6:
         count = 0
