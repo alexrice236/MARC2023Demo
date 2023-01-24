@@ -4,7 +4,7 @@ import sqlite3
 from bodata import boat_data
 
 
-power_db = "/home/pi/LCM-AutoBoat/testScripts/power.db"
+power_db = "/home/pi/MARC2023Demo/demo/power.db"
 with sqlite3.connect(power_db) as c:
     c.execute("""DROP TABLE actuation_power_data;""")
     c.execute("""CREATE TABLE IF NOT EXISTS actuation_power_data (act_power decimal, time int);""")
