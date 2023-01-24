@@ -8,8 +8,8 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, FigureCanvasAgg
 from matplotlib.figure import Figure
 import sqlite3
 
-#power_db = "/home/pi/MARC2023Demo/demo/power.db"
-power_db = "/home/ar/MARC2023Demo/demo/power.db"
+power_db = "/home/pi/MARC2023Demo/demo/power.db"
+# power_db = "/home/ar/MARC2023Demo/demo/power.db"
 
 def draw_figure(canvas, figure, loc=(0, 0)):
     figure_canvas_agg = FigureCanvasTkAgg(figure, canvas)
