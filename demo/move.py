@@ -11,21 +11,20 @@ GPIO.output(5, GPIO.LOW)
 GPIO.output(6, GPIO.LOW)
 pwm1 = GPIO.PWM(12, 400)
 pwm2 = GPIO.PWM(13, 400)
-pwm1.start(0)
-pwm2.start(0)
+
 
 def press(key):
     if key == "w":
-        pwm1.ChangeDutyCycle(10)
-        pwm2.ChangeDutyCycle(10)
+        pwm1.start(20)
+        pwm2.start(20)
     if key == "a":
-        pwm2.ChangeDutyCycle(10)
+        pwm2.start(20)
     if key == "d":
-        pwm1.ChangeDutyCycle(10)
+        pwm1.start(20)
 
 def release(key):
-    pwm1.ChangeDutyCycle(0)
-    pwm2.ChangeDutyCycle(0)
+    pwm1.stop(0)
+    pwm2.stop(0)
 
 
 
